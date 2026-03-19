@@ -272,7 +272,35 @@ const createProducto = async (): Promise<void> => {
   console.log("✅ Producto insertado:", data);
 };
 
+const updateProducto = async (): Promise<void> => {
 
+  const { data, error } = await supabase
+    .from('productos')
+    .update({ stock: 10 })
+    .eq('id', 1);
+
+  if (error) {
+    console.error("❌ Error al actualizar:", error.message);
+    return;
+  }
+
+  console.log("✅ Producto actualizado:", data);
+};
+
+const deleteProducto = async (): Promise<void> => {
+
+  const { error } = await supabase
+    .from('productos')
+    .delete()
+    .eq('id', 7);
+
+  if (error) {
+    console.error("❌ Error al eliminar:", error.message);
+    return;
+  }
+
+  console.log("✅ Producto eliminado");
+};
 
 
 
@@ -289,11 +317,11 @@ const runLaboratory = async () => {
   await createNewPost();    
   await fetchCommentsByPost(POST_ID_TO_SEARCH);
 
-  // 🔥 SUPABASE
-  await createProducto();
+  
+  //await createProducto();
   await getProductos();
-  // await updateProducto();
-  // await deleteProducto();
+  await updateProducto();
+  await deleteProducto();
 
   console.log("%c --- EXPERIMENTO FINALIZADO ---", "background: #222; color: #bada55; padding: 5px;");
 };
