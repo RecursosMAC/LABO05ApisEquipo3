@@ -318,7 +318,7 @@ const runLaboratory = async () => {
   await fetchCommentsByPost(POST_ID_TO_SEARCH);
 
   
-  //await createProducto();
+  await createProducto();
   await getProductos();
   await updateProducto();
   await deleteProducto();
