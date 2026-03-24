@@ -206,8 +206,8 @@ const fetchCommentsByPost = async (postId: number): Promise<void> => {
  * Sustituye estos valores con los de tu proyecto en Supabase (Project Settings > API)
  */
 
-//const SUPABASE_URL: string = "https://rkvqsxrownrpnqsgjtvo.supabase.co";
-//const SUPABASE_KEY: string = "sb_publishable_Q0frxsvJkHQr0e-dw3ed2w_fuSZos2U";
+const SUPABASE_URL: string = "https://rkvqsxrownrpnqsgjtvo.supabase.co";
+const SUPABASE_KEY: string = "sb_publishable_Q0frxsvJkHQr0e-dw3ed2w_fuSZos2U";
 
 /**
  * PASO 2: INICIALIZACIÓN DEL CLIENTE
@@ -215,25 +215,25 @@ const fetchCommentsByPost = async (postId: number): Promise<void> => {
  */
 
 // DESCOMENTAR LA LINEA DE ABAJO
-//const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /**
  * PASO 3: INTERFAZ DE DATOS
  * Definimos la estructura exacta de la tabla que vemos en tu imagen.
  */
-//interface material {
-  //id_material: number;       // Columna ID (Primary Key)
-  //id_clasificacion: number;       // Columna Patente (Varchar)
-  //nombre: string;
-  //materia: string;
-  //autor_materia: string; // Columna ID Propietario (Foreign Key)
-//}
+interface material {
+  id_material: number;       // Columna ID (Primary Key)
+  id_clasificacion: number;       // Columna Patente (Varchar)
+  nombre: string;
+  materia: string;
+  autor_materia: string; // Columna ID Propietario (Foreign Key)
+}
 
 /**
  * PASO 4: LA FUNCIÓN DE LECTURA (GET)
  * Esta función entra a la base de datos y trae los registros.
  */
-//const getmaterial = async (): Promise<void> => {
+const getmaterial = async (): Promise<void> => {
   
   // Realizamos la consulta: 
   // 1. .from('autos') -> Selecciona la tabla de tu imagen.
@@ -241,27 +241,27 @@ const fetchCommentsByPost = async (postId: number): Promise<void> => {
 
   // DESCOMENTAR ESTAS LINEAS QUE SIGUEN
 
-  //const { data, error } = await supabase
-    //.from('material')   
-    //.select('*');
+  const { data, error } = await supabase
+    .from('material')   
+    .select('*');
 
   // Si Supabase responde con un error (ej: tabla inexistente o sin permisos RLS)
-  //if (error) {
-    //console.error(" Error al obtener el material:", error.message);
-    //return;
-  //}
+  if (error) {
+    console.error(" Error al obtener el material:", error.message);
+    return;
+  }
 
   // Si todo sale bien, 'data' contiene el array de objetos.
   // Usamos 'as Auto[]' para decirle a TS que confíe en nuestra interfaz.
-  //const listamateriales: material[] = data as material[];
+  const listamateriales: material[] = data as material[];
 
   // Mostramos el resultado final en la consola del navegador
-  //console.log("✅ Lista de material recibida:");
-  //console.table(listamateriales); 
+  console.log("✅ Lista de material recibida:");
+  console.table(listamateriales); 
 
   
   
-//};
+};
 
 
 
@@ -280,7 +280,7 @@ const runLaboratory = async () => {
   await fetchSinglePost(POST_ID_TO_SEARCH); 
   await createNewPost();
   await fetchCommentsByPost(POST_ID_TO_SEARCH);  
-  //await getmaterial();                
+  await getmaterial();                
   
   console.log("%c --- EXPERIMENTO FINALIZADO ---", "background: #222; color: #bada55; padding: 5px;");
 };
